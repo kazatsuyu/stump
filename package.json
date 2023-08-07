@@ -1,0 +1,12 @@
+{
+  "name": "stump",
+  "version": "0.1.0",
+  "description": "Strong type utilities for metaprogramming",
+  "main": "index.ts",
+  "repository": "https://github.com/kazatsuyu/stump/",
+  "author": "Shirayama Kazatsuyu <shirayama.kazatsuyu@gmail.com>",
+  "license": "MIT OR Apache-2.0",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
