@@ -1,10 +1,10 @@
-import { Extends, Not } from './base.mjs';
-import { Add, Dec, Sub } from './calc/add-sub.mjs';
-import { Max, Min } from './calc/compare.mjs';
-import { Digits, Int, Minus, Plus } from './calc/int-str.mjs';
-import { Div2 } from './calc/mul-div.mjs';
-import { Args, Call, Fn } from './fn.mjs';
-import { AssertEq } from './test-utils.mjs';
+import type { Extends, Not } from './base.mjs';
+import type { Add, Dec, Sub } from './calc/add-sub.mjs';
+import type { Max, Min } from './calc/compare.mjs';
+import type { Digits, Int, Minus, Plus } from './calc/int-str.mjs';
+import type { Div2 } from './calc/mul-div.mjs';
+import type { Args, Call, Fn } from './fn.mjs';
+import type { AssertEq } from './test-utils.mjs';
 
 export type Length<A extends unknown[]> = Extract<`${A['length']}`, Plus>;
 
@@ -58,6 +58,18 @@ export type Reverse<T extends unknown[]> = {
   [K in keyof T]: T[Extract<ReverseSequence<Length<T>>[K], keyof T>];
 };
 
+/**
+ * @template {unknown[]} A
+ * Source tuple
+ *
+ * @template {Int | undefined} S
+ * Start index. If it is `undefined`, use `'0'` instead.
+ * If it is `Minus`, use `A['length'] + S` instead.
+ *
+ * @template {Int | undefined} E
+ * End index. if it is `undefined`, use `A['length']` instead.
+ * If it is `Minus`, use `A['length'] + S` instead.
+ */
 export type Slice<
   A extends unknown[],
   S extends Int | undefined = undefined,
@@ -90,18 +102,9 @@ namespace slice {
 
 type Split<A extends unknown[], S extends Int> = [Slice<A, '0', S>, Slice<A, S>];
 
-export type Map<F extends Fn, A extends Fn['args'][]> = {
+export type Map<A extends Fn['args'][], F extends Fn> = {
   [K in keyof A]: Call<F, A[K]>;
 };
-
-interface MapFn<F extends Fn> extends Fn<F['args'][]> {
-  return: Map<F, Args<this, MapFn<F>>>;
-}
-
-export interface MapF extends Fn {
-  args: Fn;
-  return: MapFn<Args<this, MapF>>;
-}
 
 export type FoldL<A extends F['args'][1][], F extends Fn<[unknown, unknown]>, I extends F['args'][0]> = A extends []
   ? I
@@ -109,27 +112,11 @@ export type FoldL<A extends F['args'][1][], F extends Fn<[unknown, unknown]>, I 
   ? FoldL<A1, F, Call<F, [I, T]>>
   : never;
 
-interface FoldLFn<F extends Fn<[unknown, unknown]>> extends Fn<[F['args'][1][], F['args'][0]]> {
-  return: FoldL<Args<this, FoldLFn<F>>[0], F, Args<this, FoldLFn<F>>[1]>;
-}
-
-export interface FoldLF extends Fn<Fn<[unknown, unknown]>> {
-  return: FoldLFn<Args<this, FoldLF>>;
-}
-
 export type FoldR<A extends F['args'][1][], F extends Fn<[unknown, unknown]>, I extends F['args'][0]> = A extends []
   ? I
   : A extends [...infer A1, infer T]
   ? FoldR<A1, F, Call<F, [I, T]>>
   : never;
-
-interface FoldRFn<F extends Fn<[unknown, unknown]>> extends Fn<[F['args'][1][], F['args'][0]]> {
-  return: FoldR<Args<this, FoldRFn<F>>[0], F, Args<this, FoldRFn<F>>[1]>;
-}
-
-export interface FoldRF extends Fn<Fn<[unknown, unknown]>> {
-  return: FoldRFn<Args<this, FoldRF>>;
-}
 
 interface FilterFn<F extends Fn<unknown, boolean>> extends Fn<[F['args'][], F['args']], F['args'][]> {
   return: Call<F, Args<this, FilterFn<F>>[1]> extends true
@@ -175,7 +162,7 @@ namespace _test {
     AssertEq<Slice<['a', 'b', 'c', 'd', 'e'], undefined, '3'>, ['a', 'b', 'c']>,
     AssertEq<Slice<['a', 'b', 'c', 'd', 'e'], '1', '-1'>, ['b', 'c', 'd']>,
     AssertEq<Split<['a', 'b', 'c', 'd', 'e'], '3'>, [['a', 'b', 'c'], ['d', 'e']]>,
-    AssertEq<Map<TestFn, ['abc', 'def']>, ['abcabc', 'defdef']>,
+    AssertEq<Map<['abc', 'def'], TestFn>, ['abcabc', 'defdef']>,
     AssertEq<FoldL<['a', 'b', 'c', 'd'], ConcatFn, 'o'>, 'oabcd'>,
     AssertEq<FoldR<['a', 'b', 'c', 'd'], ConcatFn, 'o'>, 'odcba'>,
     AssertEq<Filter<['1', '2', '3', '4', '3', '2', '1'], Not3>, ['1', '2', '4', '2', '1']>,

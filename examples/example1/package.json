@@ -1,0 +1,10 @@
+{
+  "name": "stump-example1",
+  "version": "0.1.0",
+  "description": "Example",
+  "main": "index.mts",
+  "license": "MIT OR Apache-2.0",
+  "dependencies": {
+    "stump": "link:../../"
+  }
+}

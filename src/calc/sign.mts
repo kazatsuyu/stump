@@ -1,4 +1,4 @@
-import { Int, Minus, Plus } from './int-str.mjs';
+import type { Int, Minus, Plus } from './int-str.mjs';
 
 export type Sign<T extends Int> = T extends Minus ? '-' : '+';
 

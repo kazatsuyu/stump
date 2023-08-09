@@ -1,5 +1,5 @@
-import { Inc } from './calc/add-sub.mjs';
-import { AssertEq } from './test-utils.mjs';
+import type { Inc } from './calc/add-sub.mjs';
+import type { AssertEq } from './test-utils.mjs';
 
 // A marker for under constructing.
 /** @deprecated */

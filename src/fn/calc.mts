@@ -1,9 +1,9 @@
-import { Add, Dec, Inc, Sub } from '../calc/add-sub.mjs';
-import { Cmp, Eq, Ge, Gt, Le, Lt, Max, Min, Ne } from '../calc/compare.mjs';
-import { Int } from '../calc/int-str.mjs';
-import { Mul } from '../calc/mul-div.mjs';
-import { Abs, Inv, Sign } from '../calc/sign.mjs';
-import { Args, Fn } from '../fn.mjs';
+import type { Add, Dec, Inc, Sub } from '../calc/add-sub.mjs';
+import type { Cmp, Eq, Ge, Gt, Le, Lt, Max, Min, Ne } from '../calc/compare.mjs';
+import type { Int } from '../calc/int-str.mjs';
+import type { Div, Div2, Mod, Mul } from '../calc/mul-div.mjs';
+import type { Abs, Inv, Sign } from '../calc/sign.mjs';
+import type { Args, Fn } from '../fn.mjs';
 
 export interface EqF extends Fn<[Int, Int], boolean> {
   return: Eq<Args<this, EqF>[0], Args<this, EqF>[1]>;
@@ -75,3 +75,16 @@ export interface SubF extends Fn<[Int, Int], Int> {
 export interface MulF extends Fn<[Int, Int]> {
   return: Mul<Args<this, MulF>[0], Args<this, MulF>[1]>;
 }
+
+export interface DivF extends Fn<[Int, Int]> {
+  return: Div<Args<this, DivF>[0], Args<this, DivF>[1]>;
+}
+
+export interface Div2F extends Fn<Int> {
+  return: Div2<Args<this, Div2F>>;
+}
+
+// TODO: 再帰上限に引っかからないようにする
+// export interface ModF extends Fn<[Int, Int]> {
+//   return: Mod<Args<this, ModF>[0], Args<this, ModF>[1]>;
+// }

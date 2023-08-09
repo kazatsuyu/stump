@@ -1,4 +1,4 @@
-import { Extends, Normalize } from './base.mjs';
+import type { Extends, Normalize } from './base.mjs';
 
 export type Assert<T extends true> = Extends<T, true>;
 export type AssertNot<T extends false> = Extends<T, false>;

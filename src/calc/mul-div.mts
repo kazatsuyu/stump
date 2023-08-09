@@ -1,9 +1,9 @@
-import { StrLen } from '../base.mjs';
-import { AssertEq } from '../test-utils.mjs';
-import { Add, Dec, Inc, Sub } from './add-sub.mjs';
-import { Cmp, Le } from './compare.mjs';
-import { Digits, DigitsWithout0, DigitsWithout9, Int, Minus, Plus } from './int-str.mjs';
-import { Abs, Inv, Sign } from './sign.mjs';
+import type { StrLen } from '../base.mjs';
+import type { AssertEq } from '../test-utils.mjs';
+import type { Add, Dec, Inc, Sub } from './add-sub.mjs';
+import type { Cmp, Le } from './compare.mjs';
+import type { Digits, DigitsWithout0, DigitsWithout9, Int, Minus, Plus } from './int-str.mjs';
+import type { Abs, Inv, Sign } from './sign.mjs';
 
 // TODO: カラツバ法とか実装したい
 export type Mul<T1 extends Int, T2 extends Int> = mul.Impl0<T1, T2>;
@@ -373,6 +373,8 @@ namespace div2 {
   type Carry = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1'];
 }
 
+export type Mod<T1 extends Int, T2 extends Int> = Sub<T1, Extract<Mul<T2, Div<T1, T2>>, Int>>;
+
 namespace _test {
   type _Test = [
     AssertEq<Mul<'1234', '5678'>, '7006652'>,
@@ -393,5 +395,6 @@ namespace _test {
     AssertEq<Div2<'1'>, '0'>,
     AssertEq<Div2<'2'>, '1'>,
     AssertEq<Div2<'10'>, '5'>,
+    AssertEq<Mod<'123', '7'>, '4'>,
   ][number];
 }
