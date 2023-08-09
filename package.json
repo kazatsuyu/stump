@@ -2,11 +2,17 @@
   "name": "stump",
   "version": "0.1.0",
   "description": "Strong type utilities for metaprogramming",
-  "main": "index.ts",
+  "main": "index.mts",
   "repository": "https://github.com/kazatsuyu/stump/",
   "author": "Shirayama Kazatsuyu <shirayama.kazatsuyu@gmail.com>",
   "license": "MIT OR Apache-2.0",
+  "scripts": {
+    "pretest": "yarn run prettier -c .",
+    "test": "yarn run tsc"
+  },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "prettier": "^3.0.1",
     "typescript": "^5.1.6"
   }
 }
