@@ -7,14 +7,11 @@
   "author": "Shirayama Kazatsuyu <shirayama.kazatsuyu@gmail.com>",
   "license": "MIT OR Apache-2.0",
   "scripts": {
-    "pretest": "yarn run prettier -c .",
     "test": "yarn run tsc"
   },
   "devDependencies": {
-    "@stump/base": "link:../base",
-    "@stump/tsconfig": "link:../tsconfig",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.1.0",
+    "@stump/base": "*",
+    "@stump/tsconfig": "*",
     "typescript": "^5.3.2"
   }
 }
