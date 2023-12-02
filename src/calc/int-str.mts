@@ -1,9 +1,10 @@
 import type { Extends } from '../base.mjs';
 import type { Assert } from '../test-utils.mjs';
+import type * as S from './string/digits.mjs';
 
-export type Digits = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
-export type DigitsWithout9 = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8';
-export type DigitsWithout0 = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
+export type Digits = S.Digits;
+export type DigitsWithout9 = S.DigitsWithout9;
+export type DigitsWithout0 = S.DigitsWithout0;
 export type Int = `${bigint}`;
 export type Plus = Int & (Digits | `${DigitsWithout0}${string}`);
 export type Minus = Int & `-${string}`;
