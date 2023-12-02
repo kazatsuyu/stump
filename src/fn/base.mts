@@ -5,10 +5,10 @@ export interface ToStringF extends Fn<string | number | bigint | boolean | undef
   return: ToString<Args<this, ToStringF>>;
 }
 
-export interface ToNumberF extends Fn<`${number}`, number> {
+export interface ToNumberF extends Fn<string, number> {
   return: ToNumber<Args<this, ToNumberF>>;
 }
 
-export interface ToBigintF extends Fn<`${bigint}`, bigint> {
+export interface ToBigintF extends Fn<string, bigint> {
   return: ToBigint<Args<this, ToBigintF>>;
 }

@@ -15,8 +15,8 @@ export type Not<T extends boolean> = Extends<T, false>;
 export type StrLen<T extends string> = T extends '' ? '0' : T extends `${string}${infer V}` ? Inc<StrLen<V>> : never;
 
 export type ToString<T extends string | number | bigint | boolean | undefined | null> = `${T}`;
-export type ToNumber<T extends `${number}`> = T extends `${infer U extends number}` ? U : never;
-export type ToBigint<T extends `${bigint}`> = T extends `${infer U extends bigint}` ? U : never;
+export type ToNumber<T extends string> = T extends `${infer U extends number}` ? U : never;
+export type ToBigint<T extends string> = T extends `${infer U extends bigint}` ? U : never;
 
 namespace _test {
   type _Test = [
