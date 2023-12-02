@@ -109,14 +109,14 @@ export type Map<A extends Fn['args'][], F extends Fn> = {
 export type FoldL<A extends F['args'][1][], F extends Fn<[unknown, unknown]>, I extends F['args'][0]> = A extends []
   ? I
   : A extends [infer T, ...infer A1]
-  ? FoldL<A1, F, Call<F, [I, T]>>
-  : never;
+    ? FoldL<A1, F, Call<F, [I, T]>>
+    : never;
 
 export type FoldR<A extends F['args'][1][], F extends Fn<[unknown, unknown]>, I extends F['args'][0]> = A extends []
   ? I
   : A extends [...infer A1, infer T]
-  ? FoldR<A1, F, Call<F, [I, T]>>
-  : never;
+    ? FoldR<A1, F, Call<F, [I, T]>>
+    : never;
 
 interface FilterFn<F extends Fn<unknown, boolean>> extends Fn<[F['args'][], F['args']], F['args'][]> {
   return: Call<F, Args<this, FilterFn<F>>[1]> extends true
@@ -129,10 +129,10 @@ export type Filter<A extends F['args'][], F extends Fn<unknown, boolean>> = Fold
 export type Flatten<A extends unknown[][]> = A extends []
   ? []
   : A extends [infer T extends unknown[]]
-  ? T
-  : Split<A, Div2<Length<A>>> extends [infer A1 extends unknown[][], infer A2 extends unknown[][]]
-  ? [...Flatten<A1>, ...Flatten<A2>]
-  : never;
+    ? T
+    : Split<A, Div2<Length<A>>> extends [infer A1 extends unknown[][], infer A2 extends unknown[][]]
+      ? [...Flatten<A1>, ...Flatten<A2>]
+      : never;
 
 namespace _test {
   interface TestFn extends Fn<string, string> {

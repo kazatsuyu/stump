@@ -13,8 +13,8 @@ namespace inc {
       ? U extends ''
         ? Table[D]
         : D extends DigitsWithout9
-        ? Extract<`${U}${Table[D]}`, Plus>
-        : `${Impl1<Extract<U, Plus>>}0`
+          ? Extract<`${U}${Table[D]}`, Plus>
+          : `${Impl1<Extract<U, Plus>>}0`
       : never
     : never;
 
@@ -31,8 +31,8 @@ namespace dec {
       ? U extends ''
         ? Table[D]
         : D extends DigitsWithout0
-        ? Extract<`${U}${Table0[D]}`, Plus>
-        : Extract<`${Impl1<U, Table1>}9`, Plus>
+          ? Extract<`${U}${Table0[D]}`, Plus>
+          : Extract<`${Impl1<U, Table1>}9`, Plus>
       : never
     : never;
 
@@ -73,11 +73,11 @@ namespace add {
     | T2 extends ''
     ? Carry[C][D1][D2]
     : '' extends T1 | T2
-    ? {
-        '': `${T1}${T2}`;
-        '1': inc.Impl1<Extract<`${T1}${T2}`, Plus>>;
-      }[Carry[C][D1][D2]]
-    : Impl1<Extract<T1, Plus>, Extract<T2, Plus>, Carry[C][D1][D2]>}${Table[C][D1][D2]}`;
+      ? {
+          '': `${T1}${T2}`;
+          '1': inc.Impl1<Extract<`${T1}${T2}`, Plus>>;
+        }[Carry[C][D1][D2]]
+      : Impl1<Extract<T1, Plus>, Extract<T2, Plus>, Carry[C][D1][D2]>}${Table[C][D1][D2]}`;
 
   type Table = {
     '': [

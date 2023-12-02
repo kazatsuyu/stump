@@ -287,18 +287,18 @@ namespace div {
   type Impl2<T1 extends Plus, T2 extends Plus, O1 extends Plus = T1, O2 extends Plus = T2> = T1 extends T2
     ? '1'
     : T1 extends '0'
-    ? '0'
-    : T2 extends '0'
-    ? never
-    : Impl3<T1, T2, O1, O2>;
+      ? '0'
+      : T2 extends '0'
+        ? never
+        : Impl3<T1, T2, O1, O2>;
 
   type Impl3<T1 extends Plus, T2 extends Plus, O1 extends Plus, O2 extends Plus> = T2 extends '1'
     ? T1
     : [T1, T2] extends [`${infer U1 extends Plus}${Digits}`, `${infer U2 extends Plus}0`]
-    ? Impl3<U1, U2, O1, O2>
-    : StrLen<T2> extends infer L extends Plus
-    ? Impl4<T1, T2, RevPoint<T2>, L, O1, O2>
-    : never;
+      ? Impl3<U1, U2, O1, O2>
+      : StrLen<T2> extends infer L extends Plus
+        ? Impl4<T1, T2, RevPoint<T2>, L, O1, O2>
+        : never;
 
   type Impl4<T1 extends Plus, T2 extends Plus, T3 extends Plus, L extends Plus, O1 extends Plus, O2 extends Plus> = Le<
     Sub<T3, T2>,
@@ -328,20 +328,20 @@ namespace div {
   > = C1 extends 0
     ? T1
     : C2 extends 0
-    ? T2
-    : C1 | C2 extends -1
-    ? Impl5<T2, O1, O2>
-    : C1 | C2 extends 1
-    ? Impl5<Dec<T1>, O1, O2, T1>
-    : T1;
+      ? T2
+      : C1 | C2 extends -1
+        ? Impl5<T2, O1, O2>
+        : C1 | C2 extends 1
+          ? Impl5<Dec<T1>, O1, O2, T1>
+          : T1;
 
   type RevPoint<T extends string, Table extends Table0 | Table1 = Table0> = T extends ''
     ? '1'
     : T extends `${infer U}${Digits}`
-    ? T extends `${U}${infer D extends Digits}`
-      ? `${RevPoint<U, D extends DigitsWithout0 ? Table1 : Table>}${Table[D]}`
-      : never
-    : never;
+      ? T extends `${U}${infer D extends Digits}`
+        ? `${RevPoint<U, D extends DigitsWithout0 ? Table1 : Table>}${Table[D]}`
+        : never
+      : never;
 
   type Table0 = ['0', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
   type Table1 = ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0'];
@@ -349,8 +349,8 @@ namespace div {
   type Div10ⁿ<T extends string, N extends Plus> = N extends '0'
     ? T
     : T extends `${infer U extends string}${Digits}`
-    ? Div10ⁿ<U, Dec<N>>
-    : never;
+      ? Div10ⁿ<U, Dec<N>>
+      : never;
 }
 
 export type Div2<T extends Int> = div2.Impl0<T>;
@@ -362,8 +362,8 @@ namespace div2 {
       ? U extends ''
         ? [Table[0][D], Carry[D]]
         : Impl1<U> extends [infer V extends string, infer C extends '0' | '1']
-        ? [`${ZeroToEmpty<V>}${Table[C][D]}`, Carry[D]]
-        : never
+          ? [`${ZeroToEmpty<V>}${Table[C][D]}`, Carry[D]]
+          : never
       : never
     : never;
 

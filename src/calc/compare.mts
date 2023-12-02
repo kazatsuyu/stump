@@ -32,10 +32,10 @@ namespace gt {
   type Impl2<T1 extends string, D1 extends Digits, T2 extends string, D2 extends Digits> = T1 extends T2
     ? Table[D1][D2]
     : T1 extends ''
-    ? false
-    : T2 extends ''
-    ? true
-    : Impl1<Extract<T1, Plus>, Extract<T2, Plus>>;
+      ? false
+      : T2 extends ''
+        ? true
+        : Impl1<Extract<T1, Plus>, Extract<T2, Plus>>;
 
   type Table = [
     [false, false, false, false, false, false, false, false, false, false],
