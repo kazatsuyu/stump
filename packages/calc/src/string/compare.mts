@@ -1,7 +1,6 @@
-import type { Extends, Not } from '../../base.mjs';
-import type { Assert, AssertNot } from '../../test-utils.mjs';
 import type { Digits } from '../int-str.mjs';
 import type { Abs, Sign } from './sign.mjs';
+import type { Extends, Not, Assert, AssertNot } from '@stump/base';
 
 export type Eq<T1 extends string, T2 extends string> = T1 | T2 extends '0' | '-0' ? true : Extends<[T1, T2], [T2, T1]>;
 

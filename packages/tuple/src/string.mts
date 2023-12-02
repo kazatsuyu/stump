@@ -1,9 +1,8 @@
-import type { Extends, Not } from '../base.mjs';
-import type { Add, Dec, Sub } from '../calc/string/add-sub.mjs';
-import type { Max, Min } from '../calc/string/compare.mjs';
-import type { Digits } from '../calc/string/digits.mjs';
-import type { Div2 } from '../calc/string/mul-div.mjs';
-import type { AssertEq } from '../test-utils.mjs';
+import type { AssertEq } from '@stump/base';
+import type { Digits } from '@stump/calc/src//string/digits.mjs';
+import type { Add, Dec, Sub } from '@stump/calc/src/string/add-sub.mjs';
+import type { Max, Min } from '@stump/calc/src/string/compare.mjs';
+import type { Div2 } from '@stump/calc/src/string/mul-div.mjs';
 
 export type Length<A extends unknown[]> = `${A['length']}`;
 

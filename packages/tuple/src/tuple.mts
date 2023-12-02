@@ -1,5 +1,5 @@
-import type { Int, Plus } from './calc/int-str.mjs';
-import type * as S from './tuple/string.mjs';
+import type * as S from './string.mjs';
+import type { Int, Plus } from '@stump/calc';
 
 export type Length<A extends unknown[]> = Extract<S.Length<A>, Plus>;
 

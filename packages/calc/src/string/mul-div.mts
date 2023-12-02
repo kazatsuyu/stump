@@ -1,9 +1,9 @@
-import type { StrLen } from '../../base.mjs';
-import type { AssertEq } from '../../test-utils.mjs';
 import type { Add, Dec, Inc, Sub } from './add-sub.mjs';
 import type { Cmp, Le } from './compare.mjs';
 import type { Digits, DigitsWithout0, DigitsWithout9 } from './digits.mjs';
 import type { Abs, Inv, Sign } from './sign.mjs';
+import type { StrLen } from './utils.mjs';
+import type { AssertEq } from '@stump/base';
 
 // TODO: カラツバ法とか実装したい
 export type Mul<T1 extends string, T2 extends string> = mul.Impl0<T1, T2>;

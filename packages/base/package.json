@@ -1,23 +1,17 @@
 {
-  "name": "@stump/workspace",
+  "name": "@stump/base",
   "version": "0.1.0",
   "description": "Strong type utilities for metaprogramming",
+  "main": "index.mts",
   "repository": "https://github.com/kazatsuyu/stump/",
   "author": "Shirayama Kazatsuyu <shirayama.kazatsuyu@gmail.com>",
   "license": "MIT OR Apache-2.0",
-  "private": "true",
-  "workspaces": [
-    "packages/base",
-    "packages/base",
-    "packages/stump",
-    "packages/tsconfig",
-    "packages/tuple",
-    "examples/*"
-  ],
   "scripts": {
-    "test": "yarn workspaces run test"
+    "pretest": "yarn run prettier -c .",
+    "test": "yarn run tsc"
   },
   "devDependencies": {
+    "@stump/tsconfig": "link:../tsconfig",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "prettier": "^3.1.0",
     "typescript": "^5.3.2"

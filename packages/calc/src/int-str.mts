@@ -1,6 +1,5 @@
-import type { Extends } from '../base.mjs';
-import type { Assert } from '../test-utils.mjs';
 import type * as S from './string/digits.mjs';
+import type { Extends, Assert } from '@stump/base';
 
 export type Digits = S.Digits;
 export type DigitsWithout9 = S.DigitsWithout9;

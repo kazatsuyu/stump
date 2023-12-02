@@ -1,4 +1,4 @@
-import type stump from 'stump';
+import type * as stump from '@stump/stump';
 
 export type Add = stump.Add<'1', '2'>;
 //          ^?

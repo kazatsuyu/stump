@@ -1,7 +1,7 @@
-import type { AssertEq } from '../../test-utils.mjs';
 import type { Gt } from './compare.mjs';
 import type { Digits, DigitsWithout9, DigitsWithout0 } from './digits.mjs';
 import type { Abs, Inv, Sign } from './sign.mjs';
+import type { AssertEq } from '@stump/base';
 
 export type Inc<T extends string> = inc.Impl0<T>;
 
