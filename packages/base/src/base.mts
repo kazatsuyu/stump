@@ -1,5 +1,3 @@
-import type { AssertEq } from './test-utils.mjs';
-
 // A marker for under constructing.
 /** @deprecated A marker for under constructing.*/
 export type ToDo = never;
@@ -16,11 +14,3 @@ export type Not<T extends boolean> = Extends<T, false>;
 export type ToString<T extends string | number | bigint | boolean | undefined | null> = `${T}`;
 export type ToNumber<T extends string> = T extends `${infer U extends number}` ? U : never;
 export type ToBigint<T extends string> = T extends `${infer U extends bigint}` ? U : never;
-
-namespace _test {
-  type _Test = [
-    AssertEq<ToString<10>, '10'>,
-    AssertEq<ToNumber<'1.25e+100'>, 1.25e100>,
-    AssertEq<ToBigint<'10'>, 10n>,
-  ][number];
-}

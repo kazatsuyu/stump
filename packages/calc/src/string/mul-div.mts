@@ -3,7 +3,6 @@ import type { Cmp, Le } from './compare.mjs';
 import type { Digits, DigitsWithout0, DigitsWithout9 } from './digits.mjs';
 import type { Abs, Inv, Sign } from './sign.mjs';
 import type { StrLen } from './utils.mjs';
-import type { AssertEq } from '@stump/base';
 
 // TODO: カラツバ法とか実装したい
 export type Mul<T1 extends string, T2 extends string> = mul.Impl0<T1, T2>;
@@ -384,27 +383,3 @@ namespace div2 {
 }
 
 export type Mod<T1 extends string, T2 extends string> = Sub<T1, Extract<Mul<T2, Div<T1, T2>>, string>>;
-
-namespace _test {
-  type _Test = [
-    AssertEq<Mul<'1234', '5678'>, '7006652'>,
-    AssertEq<Mul<'1234567890', '1234567890'>, '1524157875019052100'>,
-    AssertEq<Mul<'1234', '0'>, '0'>,
-    AssertEq<Mul<'1234', '1'>, '1234'>,
-    AssertEq<Div<'1234', '0'>, never>,
-    AssertEq<Div<'1234', '1'>, '1234'>,
-    AssertEq<Div<'1234', '2'>, '617'>,
-    AssertEq<Div<'1234', '3'>, '411'>,
-    AssertEq<Div<'212', '2'>, '106'>,
-    AssertEq<Div<'1234', '6789'>, '0'>,
-    AssertEq<Div<'12345', '6789'>, '1'>,
-    AssertEq<Div<'6789', '1234'>, '5'>,
-    AssertEq<Div<'1234', '1234'>, '1'>,
-    AssertEq<Div<'7006652', '1234'>, '5678'>,
-    AssertEq<Div2<'12345'>, '6172'>,
-    AssertEq<Div2<'1'>, '0'>,
-    AssertEq<Div2<'2'>, '1'>,
-    AssertEq<Div2<'10'>, '5'>,
-    AssertEq<Mod<'123', '7'>, '4'>,
-  ][number];
-}

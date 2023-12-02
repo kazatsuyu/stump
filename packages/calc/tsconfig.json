@@ -1,4 +1,4 @@
 {
   "extends": ["@stump/tsconfig"],
-  "include": ["index.mts", "src/**/*.mts"]
+  "include": ["index.mts", "test.mts", "src/**/*.mts"]
 }

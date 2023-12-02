@@ -1,6 +1,6 @@
 import type { Digits } from '../int-str.mjs';
 import type { Abs, Sign } from './sign.mjs';
-import type { Extends, Not, Assert, AssertNot } from '@stump/base';
+import type { Extends, Not } from '@stump/base';
 
 export type Eq<T1 extends string, T2 extends string> = T1 | T2 extends '0' | '-0' ? true : Extends<[T1, T2], [T2, T1]>;
 
@@ -61,30 +61,3 @@ export type Cmp<T1 extends string, T2 extends string> = Gt<T1, T2> extends true 
 export type Max<T1 extends string, T2 extends string> = Gt<T1, T2> extends true ? T1 : T2;
 
 export type Min<T1 extends string, T2 extends string> = Lt<T1, T2> extends true ? T1 : T2;
-
-namespace _test {
-  type _Test = [
-    Assert<Eq<'0', '0'>>,
-    Assert<Eq<'0', '-0'>>,
-    Assert<Eq<'-0', '0'>>,
-    Assert<Eq<'-0', '-0'>>,
-    Assert<Eq<'1', '1'>>,
-    Assert<Gt<'1', '0'>>,
-    Assert<Gt<'10', '9'>>,
-    Assert<Gt<'101', '100'>>,
-    Assert<Gt<'101', '11'>>,
-    Assert<Gt<'-0', '-1'>>,
-    Assert<Gt<'-9', '-10'>>,
-    Assert<Gt<'-100', '-101'>>,
-    Assert<Gt<'-11', '-101'>>,
-    AssertNot<Gt<'1', '1'>>,
-    AssertNot<Gt<'0', '-0'>>,
-    AssertNot<Gt<'0', '1'>>,
-    Assert<Ge<'1', '1'>>,
-    Assert<Ge<'101', '11'>>,
-    Assert<Le<'1', '1'>>,
-    Assert<Le<'11', '101'>>,
-    AssertNot<Lt<'1', '1'>>,
-    Assert<Lt<'11', '101'>>,
-  ][number];
-}
