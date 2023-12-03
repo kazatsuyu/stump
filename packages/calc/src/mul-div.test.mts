@@ -17,6 +17,7 @@ namespace _test {
     AssertEq<Div<'6789', '1234'>, '5'>,
     AssertEq<Div<'1234', '1234'>, '1'>,
     AssertEq<Div<'7006652', '1234'>, '5678'>,
+    AssertEq<Div<'333333334', '3'>, '111111111'>,
     AssertEq<Div2<'12345'>, '6172'>,
     AssertEq<Div2<'1'>, '0'>,
     AssertEq<Div2<'2'>, '1'>,

@@ -1,6 +1,6 @@
 import type { Add, Dec, Inc, Sub } from './add-sub.mjs';
-import type { Cmp, Le } from './compare.mjs';
-import type { Digits, DigitsWithout0, DigitsWithout9 } from './digits.mjs';
+import type { Cmp, Le, Max } from './compare.mjs';
+import type { Digits, DigitsWithout9 } from './digits.mjs';
 import type { Abs, Inv, Sign } from './sign.mjs';
 import type { StrLen } from './utils.mjs';
 
@@ -277,48 +277,46 @@ namespace mulD {
 export type Div<T1 extends string, T2 extends string> = div.Impl0<T1, T2>;
 
 namespace div {
-  export type Impl0<T1 extends string, T2 extends string> = Impl1<Sign<T2>, Abs<T1>, Sign<T2>, Abs<T2>>;
+  export type Impl0<T1 extends string, T2 extends string> = Impl1<Abs<T1>, Abs<T2>, `${Sign<T1>}${Sign<T2>}`>;
 
-  export type Impl1<S1 extends '+' | '-', T1 extends string, S2 extends '+' | '-', T2 extends string> = Impl2<
-    T1,
-    T2
-  > extends infer U extends string
-    ? {
-        '+': { '+': U; '-': Inv<U> };
-        '-': { '+': Inv<U>; '-': U };
-      }[S1][S2]
-    : Impl2<T1, T2>;
+  export type Impl1<T1 extends string, T2 extends string, S extends '++' | '+-' | '-+' | '--'> = Impl2<
+    Impl3<T1, T2>,
+    S
+  >;
 
-  type Impl2<T1 extends string, T2 extends string, O1 extends string = T1, O2 extends string = T2> = T1 extends T2
-    ? '1'
-    : T1 extends '0'
-      ? '0'
-      : T2 extends '0'
-        ? never
-        : Impl3<T1, T2, O1, O2>;
+  export type Impl2<T extends string, S extends '++' | '+-' | '-+' | '--'> = {
+    '++': T;
+    '+-': Inv<T>;
+    '-+': Inv<T>;
+    '--': T;
+  }[S];
 
-  type Impl3<T1 extends string, T2 extends string, O1 extends string, O2 extends string> = T2 extends '1'
+  type Impl3<T1 extends string, T2 extends string> = [T1, T2] extends { 0: '0' } | { 1: '0' }
+    ? T2 extends '0'
+      ? never
+      : '0'
+    : Impl4<T1, T2>;
+
+  type Impl4<T1 extends string, T2 extends string, O1 extends string = T1, O2 extends string = T2> = T2 extends '1'
     ? T1
-    : [T1, T2] extends [`${infer U1 extends string}${Digits}`, `${infer U2 extends string}0`]
-      ? Impl3<U1, U2, O1, O2>
-      : StrLen<T2> extends infer L extends string
-        ? Impl4<T1, T2, RevPoint<T2>, L, O1, O2>
-        : never;
+    : [T1, T2] extends [`${infer U1}${Digits}`, `${infer U2}0`]
+      ? Impl4<U1, U2, O1, O2>
+      : Impl5<T1, T2, RevPoint<T2>, O1, O2>;
 
-  type Impl4<
+  type Impl5<
     T1 extends string,
     T2 extends string,
     T3 extends string,
-    L extends string,
     O1 extends string,
     O2 extends string,
+    L extends string = Max<'0', Sub<Add<StrLen<T2>, StrLen<T3>>, StrLen<O1>>>,
   > = Le<Sub<T3, T2>, '2'> extends true
     ? Div10ⁿ<T1, L> extends infer U
-      ? Impl5<U extends `${Digits}${string}` ? U : '1', O1, O2>
+      ? Impl6<U extends `${Digits}${string}` ? U : '1', O1, O2>
       : never
-    : Impl3<Div10ⁿ<Mul<T1, T3>, L>, Div10ⁿ<Mul<T2, T3>, L>, O1, O2>;
+    : Impl4<Div10ⁿ<Mul<T1, T3>, L>, Div10ⁿ<Mul<T2, T3>, L>, O1, O2>;
 
-  type Impl5<T1 extends string, O1 extends string, O2 extends string, T2 extends string = Inc<T1>> = Impl6<
+  type Impl6<T1 extends string, O1 extends string, O2 extends string, T2 extends string = Inc<T1>> = Impl7<
     T1,
     T2,
     Cmp<Mul<O2, T1>, O1>,
@@ -327,29 +325,27 @@ namespace div {
     O2
   >;
 
-  type Impl6<
+  type Impl7<
     T1 extends string,
     T2 extends string,
-    C1 extends -1 | 0 | 1,
-    C2 extends -1 | 0 | 1,
+    C1 extends '-1' | '0' | '1',
+    C2 extends '-1' | '0' | '1',
     O1 extends string,
     O2 extends string,
-  > = C1 extends 0
-    ? T1
-    : C2 extends 0
-      ? T2
-      : C1 | C2 extends -1
-        ? Impl5<T2, O1, O2>
-        : C1 | C2 extends 1
-          ? Impl5<Dec<T1>, O1, O2, T1>
-          : T1;
+  > = C1 | C2 extends '-1'
+    ? Impl6<T2, O1, O2>
+    : C1 | C2 extends '1'
+      ? Impl6<Dec<T1>, O1, O2, T1>
+      : C2 extends '0'
+        ? T2
+        : T1;
 
-  type RevPoint<T extends string, Table extends Table0 | Table1 = Table0> = T extends ''
-    ? '1'
-    : T extends `${infer U}${Digits}`
-      ? T extends `${U}${infer D extends Digits}`
-        ? `${RevPoint<U, D extends DigitsWithout0 ? Table1 : Table>}${Table[D]}`
-        : never
+  type RevPoint<T extends string, Table extends Table0 | Table1 = Table0> = T extends `${infer U}${Digits}`
+    ? T extends `${U}${infer D extends Digits}`
+      ? `${RevPoint<U, D extends '0' ? Table : Table1>}${Table[D]}`
+      : never
+    : T extends ''
+      ? '1'
       : never;
 
   type Table0 = ['0', '9', '8', '7', '6', '5', '4', '3', '2', '1'];
