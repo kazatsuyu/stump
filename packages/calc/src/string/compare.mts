@@ -56,7 +56,12 @@ export type Le<T1 extends string, T2 extends string> = Not<Gt<T1, T2>>;
 
 export type Lt<T1 extends string, T2 extends string> = Gt<T2, T1>;
 
-export type Cmp<T1 extends string, T2 extends string> = Gt<T1, T2> extends true ? 1 : Gt<T2, T1> extends true ? -1 : 0;
+export type Cmp<T1 extends string, T2 extends string> = Gt<T1, T2> extends true
+  ? '1'
+  : Gt<T2, T1> extends true
+    ? '-1'
+    : '0';
+
 
 export type Max<T1 extends string, T2 extends string> = Gt<T1, T2> extends true ? T1 : T2;
 
