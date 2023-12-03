@@ -62,7 +62,8 @@ export type Cmp<T1 extends string, T2 extends string> = Gt<T1, T2> extends true
     ? '-1'
     : '0';
 
+type NormalizeZero<T extends string> = T extends '-0' ? '0' : T;
 
-export type Max<T1 extends string, T2 extends string> = Gt<T1, T2> extends true ? T1 : T2;
+export type Max<T1 extends string, T2 extends string> = NormalizeZero<Gt<T1, T2> extends true ? T1 : T2>;
 
-export type Min<T1 extends string, T2 extends string> = Lt<T1, T2> extends true ? T1 : T2;
+export type Min<T1 extends string, T2 extends string> = NormalizeZero<Lt<T1, T2> extends true ? T1 : T2>;
