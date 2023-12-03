@@ -1,4 +1,3 @@
-import type { AssertEq } from '@stump/base';
 import type { Digits } from '@stump/calc/src//string/digits.mjs';
 import type { Add, Dec, Sub } from '@stump/calc/src/string/add-sub.mjs';
 import type { Max, Min } from '@stump/calc/src/string/compare.mjs';
@@ -56,18 +55,6 @@ export type Reverse<T extends unknown[]> = {
   [K in keyof T]: T[Extract<ReverseSequence<Length<T>>[K], keyof T>];
 };
 
-/**
- * @template {unknown[]} A
- * Source tuple
- *
- * @template {string | undefined} S
- * Start index. If it is `undefined`, use `'0'` instead.
- * If it is `string`, use `A['length'] + S` instead.
- *
- * @template {string | undefined} E
- * End index. if it is `undefined`, use `A['length']` instead.
- * If it is `string`, use `A['length'] + S` instead.
- */
 export type Slice<
   A extends unknown[],
   S extends string | undefined = undefined,

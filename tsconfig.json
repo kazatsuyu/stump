@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/base" },
+    { "path": "packages/calc" },
+    { "path": "packages/stump" },
+    { "path": "packages/tuple" }
+  ]
+}

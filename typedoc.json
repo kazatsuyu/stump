@@ -1,0 +1,14 @@
+{
+  "name": "Stump",
+  "sourceLinkTemplate": "https://github.com/kazatsuyu/stump/blob/{gitRevision}/{path}#L{line}",
+  "entryPoints": ["packages/stump"],
+  "categorizeByGroup": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeExternals": true,
+  "plugin": ["@mxssfd/typedoc-theme"],
+  "theme": "my-theme",
+  "hideGenerator": true,
+  "includeVersion": true,
+  "readme": "none"
+}
