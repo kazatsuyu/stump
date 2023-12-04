@@ -12,7 +12,6 @@
   "devDependencies": {
     "@stump/base": "*",
     "@stump/calc": "*",
-    "@stump/tsconfig": "*",
-    "typescript": "^5.3.2"
+    "@stump/tsconfig": "*"
   }
 }

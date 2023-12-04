@@ -8,8 +8,5 @@
   "license": "MIT OR Apache-2.0",
   "scripts": {
     "test": "echo nothing to do."
-  },
-  "devDependencies": {
-    "typescript": "^5.3.2"
   }
 }
