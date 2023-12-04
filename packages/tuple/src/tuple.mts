@@ -1,10 +1,12 @@
 import type * as S from './string.mjs';
 import type { Int, Plus } from '@stump/calc';
 
+type TBase = readonly unknown[];
+
 /**
  * @category Tuple
  *
- * @template {unknown[]} A
+ * @template {readonly unknown[]} A
  *
  * @description
  * Count tuple length.
@@ -16,7 +18,7 @@ import type { Int, Plus } from '@stump/calc';
  * //     type A = "3"
  * ```
  */
-export type Length<A extends unknown[]> = Extract<S.Length<A>, Plus>;
+export type Length<A extends TBase> = Extract<S.Length<A>, Plus>;
 
 /**
  * @category Tuple
@@ -40,7 +42,7 @@ export type Fill<T, N extends Plus> = S.Fill<T, N>;
 /**
  * @category Tuple
  *
- * @template {unknown[]} T
+ * @template {readonly unknown[]} T
  *
  * @template {Plus} N
  *
@@ -54,7 +56,7 @@ export type Fill<T, N extends Plus> = S.Fill<T, N>;
  * //     type A = [0, 1, 0, 1, 0, 1]
  * ```
  */
-export type Repeat<T extends unknown[], N extends Plus> = S.Repeat<T, N>;
+export type Repeat<T extends TBase, N extends Plus> = S.Repeat<T, N>;
 
 /**
  * @category Tuple
@@ -105,7 +107,7 @@ export type ReverseSequence<N extends Plus, S extends Int = '0'> = Extract<S.Rev
 /**
  * @category Tuple
  *
- * @template {unknown[]} T
+ * @template {readonly unknown[]} T
  *
  * @description
  * Sort contents of tuple `T` in reverse order.
@@ -117,12 +119,12 @@ export type ReverseSequence<N extends Plus, S extends Int = '0'> = Extract<S.Rev
  * //     type A = ["d", "e", "s", "s", "e", "r", "t", "s"]
  * ```
  */
-export type Reverse<T extends unknown[]> = S.Reverse<T>;
+export type Reverse<T extends TBase> = S.Reverse<T>;
 
 /**
  * @category Tuple
  *
- * @template {unknown[]} A
+ * @template {readonly unknown[]} A
  * Source tuple
  *
  * @template {Int | undefined} S
@@ -144,7 +146,7 @@ export type Reverse<T extends unknown[]> = S.Reverse<T>;
  * ```
  */
 export type Slice<
-  A extends unknown[],
+  A extends TBase,
   S extends Int | undefined = undefined,
   E extends Int | undefined = undefined,
 > = S.Slice<A, S, E>;
@@ -152,7 +154,7 @@ export type Slice<
 /**
  * @category Tuple
  *
- * @template {unknown[][]} A
+ * @template {readonly (readonly unknown[])[]} A
  *
  * @description
  * Combines subtuples of tuple `A`.
@@ -164,4 +166,4 @@ export type Slice<
  * //     type A = ["S", "T", "U", "M", "P"]
  * ```
  */
-export type Flatten<A extends unknown[][]> = S.Flatten<A>;
+export type Flatten<A extends readonly TBase[]> = S.Flatten<A>;
