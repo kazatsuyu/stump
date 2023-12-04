@@ -1,11 +1,60 @@
-import type { Digits } from '@stump/calc/src//string/digits.mjs';
-import type { Add, Dec, Sub } from '@stump/calc/src/string/add-sub.mjs';
-import type { Max, Min } from '@stump/calc/src/string/compare.mjs';
+import type { Add, Dec, Inc, Sub } from '@stump/calc/src/string/add-sub.mjs';
+import type { Le, Max, Min } from '@stump/calc/src/string/compare.mjs';
+import type { Digits } from '@stump/calc/src/string/digits.mjs';
 import type { Div2 } from '@stump/calc/src/string/mul-div.mjs';
 
 type TBase = readonly unknown[];
 
 export type Length<A extends TBase> = `${A['length']}`;
+
+export type DeconstructVariableTuple<T extends TBase> = deconstructVariadicTuple.Impl1<T>;
+
+namespace deconstructVariadicTuple {
+  export type Impl1<T extends TBase, A extends TBase = []> = T extends readonly [infer U, ...infer V]
+    ? T extends readonly [U, ...V]
+      ? Impl1<V, [...A, U]>
+      : Impl2<T, A>
+    : Impl2<T, A>;
+  type Impl2<T extends TBase, A extends TBase, B extends TBase = []> = T extends readonly [...infer U, infer V]
+    ? T extends readonly [...U, V]
+      ? Impl2<U, A, [V, ...B]>
+      : [A, U, B]
+    : [A, T, B];
+}
+
+export type MinLength<T extends TBase> = number extends T['length']
+  ? Add<Length<DeconstructVariableTuple<T>[0]>, Length<DeconstructVariableTuple<T>[2]>>
+  : Length<T>;
+
+export type At<T extends TBase, I extends string> = Normalize<at.Impl1<T, I>>;
+
+type Normalize<T> = (T extends infer U ? [U] : [T])[0];
+
+namespace at {
+  export type Impl1<T extends TBase, I extends string> = I extends keyof T & `${number}`
+    ? T[I]
+    : number extends T['length']
+      ? Impl2<DeconstructVariableTuple<T>, I>
+      : I extends `-${infer I2}`
+        ? Le<I2, Length<T>> extends true
+          ? T[Extract<Sub<Length<T>, I2>, keyof T>]
+          : undefined
+        : undefined;
+  type Impl2<T extends [TBase, TBase, TBase], I extends string> = Impl3<T[0], T[1], T[2], I>;
+  type Impl3<A extends TBase, T extends TBase, B extends TBase, I extends string> = I extends `-${infer I2}`
+    ? Dec<I2> extends keyof B & `${number}`
+      ? At<B, I>
+      : Impl5<A, T, Sub<I2, Length<B>>>
+    : Impl4<T, B, Sub<I, Length<A>>>;
+  type Impl4<T extends TBase, B extends TBase, I extends string> =
+    | Slice<B, '0', Inc<I>>[number]
+    | T[number]
+    | (I extends keyof B & `${number}` ? never : undefined);
+  type Impl5<A extends TBase, T extends TBase, I extends string> =
+    | Slice<A, `-${I}`>[number]
+    | T[number]
+    | (Dec<I> extends keyof A & `${number}` ? never : undefined);
+}
 
 export type Fill<T, N extends string> = Repeat<[T], N>;
 

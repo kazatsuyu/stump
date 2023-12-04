@@ -20,6 +20,12 @@ type TBase = readonly unknown[];
  */
 export type Length<A extends TBase> = Extract<S.Length<A>, Plus>;
 
+export type DeconstructVariableTuple<T extends TBase> = S.DeconstructVariableTuple<T>;
+
+export type MinLength<T extends TBase> = Extract<S.MinLength<T>, Plus>;
+
+export type At<T extends TBase, I extends Int> = S.At<T, I>;
+
 /**
  * @category Tuple
  *
