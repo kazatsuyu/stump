@@ -5,7 +5,7 @@ import type { Div2 } from '@stump/calc/src/string/mul-div.mjs';
 
 type TBase = readonly unknown[];
 
-export type Length<A extends TBase> = `${A['length']}`;
+export type Length<T extends TBase> = `${T['length']}`;
 
 export type DeconstructVariableTuple<T extends TBase> = deconstructVariadicTuple.Impl1<T>;
 
@@ -140,12 +140,18 @@ type Split<A extends TBase, S extends string> = [Slice<A, '0', S>, Slice<A, S>];
 
 type TTBase = readonly TBase[];
 
-export type Flatten<A extends TTBase> = A extends [] | [TBase]
-  ? A extends []
-    ? []
-    : A extends [infer T extends TBase]
-      ? T
-      : never
-  : Split<A, Div2<Length<A>>> extends [infer A1 extends TTBase, infer A2 extends TTBase]
-    ? [...Flatten<A1>, ...Flatten<A2>]
+export type Flatten<T extends TTBase> = T extends [] | [TBase]
+  ? T extends [infer T extends TBase]
+    ? T
+    : []
+  : Split<T, Div2<Length<T>>> extends [infer T1 extends TTBase, infer T2 extends TTBase]
+    ? [...Flatten<T1>, ...Flatten<T2>]
+    : never;
+
+export type Sum<T extends readonly string[]> = T extends [] | [string]
+  ? T extends [infer T extends string]
+    ? T
+    : '0'
+  : Split<T, Div2<Length<T>>> extends [infer T1 extends readonly string[], infer T2 extends readonly string[]]
+    ? Add<Sum<T1>, Sum<T2>>
     : never;

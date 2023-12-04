@@ -6,7 +6,7 @@ type TBase = readonly unknown[];
 /**
  * @category Tuple
  *
- * @template {readonly unknown[]} A
+ * @template {readonly unknown[]} T
  *
  * @description
  * Count tuple length.
@@ -18,7 +18,7 @@ type TBase = readonly unknown[];
  * //     type A = "3"
  * ```
  */
-export type Length<A extends TBase> = Extract<S.Length<A>, Plus>;
+export type Length<T extends TBase> = Extract<S.Length<T>, Plus>;
 
 export type DeconstructVariableTuple<T extends TBase> = S.DeconstructVariableTuple<T>;
 
@@ -130,7 +130,7 @@ export type Reverse<T extends TBase> = S.Reverse<T>;
 /**
  * @category Tuple
  *
- * @template {readonly unknown[]} A
+ * @template {readonly unknown[]} T
  * Source tuple
  *
  * @template {Int | undefined} S
@@ -152,15 +152,15 @@ export type Reverse<T extends TBase> = S.Reverse<T>;
  * ```
  */
 export type Slice<
-  A extends TBase,
+  T extends TBase,
   S extends Int | undefined = undefined,
   E extends Int | undefined = undefined,
-> = S.Slice<A, S, E>;
+> = S.Slice<T, S, E>;
 
 /**
  * @category Tuple
  *
- * @template {readonly (readonly unknown[])[]} A
+ * @template {readonly (readonly unknown[])[]} T
  *
  * @description
  * Combines subtuples of tuple `A`.
@@ -172,4 +172,6 @@ export type Slice<
  * //     type A = ["S", "T", "U", "M", "P"]
  * ```
  */
-export type Flatten<A extends readonly TBase[]> = S.Flatten<A>;
+export type Flatten<T extends readonly TBase[]> = S.Flatten<T>;
+
+export type Sum<T extends readonly Int[]> = Extract<S.Sum<T>, Int>;
