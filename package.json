@@ -9,6 +9,11 @@
   "workspaces": [
     "packages/base",
     "packages/calc",
+    "packages/globals",
+    "packages/globals-es2019",
+    "packages/globals-es2022",
+    "packages/globals-es2023",
+    "packages/globals-latest",
     "packages/stump",
     "packages/tsconfig",
     "packages/tuple",

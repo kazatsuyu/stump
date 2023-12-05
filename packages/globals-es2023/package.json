@@ -1,0 +1,17 @@
+{
+  "name": "@stump/globals-es2023",
+  "version": "0.1.0-alpha.1",
+  "description": "Strong type utilities for metaprogramming",
+  "main": "index.mts",
+  "repository": "https://github.com/kazatsuyu/stump/",
+  "author": "Shirayama Kazatsuyu <shirayama.kazatsuyu@gmail.com>",
+  "license": "MIT OR Apache-2.0",
+  "scripts": {
+    "test": "yarn run tsc"
+  },
+  "devDependencies": {
+    "@stump/tsconfig": "*",
+    "@stump/stump": "*",
+    "@stump/globals-es2022": "*"
+  }
+}

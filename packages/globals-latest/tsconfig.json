@@ -1,0 +1,4 @@
+{
+  "extends": ["@stump/globals-es2022"],
+  "include": ["index.mts"]
+}
