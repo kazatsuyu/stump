@@ -151,7 +151,10 @@ export type Reverse<T extends TBase> = S.Reverse<T>;
  * //     type A = ["T", "U", "M"]
  * ```
  */
-export type Slice<T extends TBase, S extends Position = '0', E extends Position = Last> = S.Slice<T, S, E>;
+export type Slice<T extends TBase, S extends Position = '0', E extends Position = Last> = Extract<
+  S.Slice<T, S, E>,
+  TBase
+>;
 
 export type Last = S.Last;
 
