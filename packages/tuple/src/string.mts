@@ -232,15 +232,15 @@ namespace slice {
 
 type Split<A extends TBase, S extends string> = [Slice<A, '0', S>, Slice<A, S>];
 
-type TTBase = readonly TBase[];
-
-export type Flatten<T extends TTBase> = T extends [] | [TBase]
-  ? T extends [infer T extends TBase]
-    ? T
-    : []
-  : Split<T, Div2<Length<T>>> extends [infer T1 extends TTBase, infer T2 extends TTBase]
-    ? [...Flatten<T1>, ...Flatten<T2>]
-    : never;
+export type Flatten<T extends TBase, D extends string = '1'> = D extends '0'
+  ? T
+  : T extends [] | [unknown]
+    ? T extends [infer T extends TBase]
+      ? Flatten<T, Dec<D>>
+      : T
+    : Split<T, Div2<Length<T>>> extends [infer T1 extends TBase, infer T2 extends TBase]
+      ? [...Flatten<T1, D>, ...Flatten<T2, D>]
+      : never;
 
 export type Sum<T extends readonly string[]> = T extends [] | [string]
   ? T extends [infer T extends string]

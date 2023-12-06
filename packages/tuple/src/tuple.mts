@@ -160,10 +160,12 @@ type Position = Int | Last;
 /**
  * @category Tuple
  *
- * @template {readonly (readonly unknown[])[]} T
+ * @template {readonly unknown[]} T
+ *
+ * @template {Int} D
  *
  * @description
- * Combines subtuples of tuple `A`.
+ * Combines subtuples of tuple `T`.
  *
  * @example
  * ```ts
@@ -172,6 +174,6 @@ type Position = Int | Last;
  * //     type A = ["S", "T", "U", "M", "P"]
  * ```
  */
-export type Flatten<T extends readonly TBase[]> = S.Flatten<T>;
+export type Flatten<T extends TBase, D extends Int = '1'> = S.Flatten<T, D>;
 
 export type Sum<T extends readonly Int[]> = Extract<S.Sum<T>, Int>;
