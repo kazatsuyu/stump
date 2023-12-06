@@ -177,3 +177,9 @@ type Position = Int | Last;
 export type Flatten<T extends TBase, D extends Int = '1'> = S.Flatten<T, D>;
 
 export type Sum<T extends readonly Int[]> = Extract<S.Sum<T>, Int>;
+
+export type Join<T extends readonly unknown[], S extends string = ','> = S.Join<T, S>;
+
+export type Entries<T extends readonly unknown[]> = S.Entries<T>;
+
+export type RevEntries<T extends readonly unknown[]> = S.RevEntries<T>;

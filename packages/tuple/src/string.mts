@@ -1,3 +1,4 @@
+import { AnyToString, ToNumber } from '@stump/base';
 import type { Add, Dec, Inc, Sub } from '@stump/calc/src/string/add-sub.mjs';
 import type { Ge, Le, Max, Min } from '@stump/calc/src/string/compare.mjs';
 import type { Digits } from '@stump/calc/src/string/digits.mjs';
@@ -249,3 +250,27 @@ export type Sum<T extends readonly string[]> = T extends [] | [string]
   : Split<T, Div2<Length<T>>> extends [infer T1 extends readonly string[], infer T2 extends readonly string[]]
     ? Add<Sum<T1>, Sum<T2>>
     : never;
+
+export type Join<T extends TBase, S extends string> = T extends [] | [unknown]
+  ? T extends [infer T]
+    ? AnyToString<T>
+    : ''
+  : Split<T, Div2<Length<T>>> extends [infer T1 extends readonly string[], infer T2 extends readonly string[]]
+    ? `${Join<T1, S>}${S}${Join<T2, S>}`
+    : never;
+
+export type Entries<T extends TBase> = number extends T['length']
+  ? DeconstructVariableTuple<T> extends [infer A extends TBase, infer T extends TBase, infer B extends TBase]
+    ? Entries<A> | [number, T[number]] | Entries<B>
+    : never
+  : {
+      [K in keyof T]: [ToNumber<K>, T[K]];
+    }[number];
+
+export type RevEntries<T extends readonly unknown[]> = number extends T['length']
+  ? DeconstructVariableTuple<T> extends [infer A extends TBase, infer T extends TBase, infer B extends TBase]
+    ? RevEntries<A> | [(T | B)[number], number]
+    : never
+  : {
+      [K in keyof T]: [T[K], ToNumber<K>];
+    }[number];
