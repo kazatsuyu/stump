@@ -102,9 +102,13 @@ namespace reversesequence {
   };
 }
 
-export type Reverse<T extends TBase> = {
-  [K in keyof T]: T[Extract<ReverseSequence<Length<T>>[K], keyof T>];
-};
+export type Reverse<T extends TBase> = reverse.Impl0<T>;
+
+namespace reverse {
+  export type Impl0<T extends TBase, S = ReverseSequence<Length<T>>> = {
+    [K in keyof S]: T[Extract<S[K], keyof T>];
+  };
+}
 
 declare const Last: unique symbol;
 export type Last = typeof Last;
