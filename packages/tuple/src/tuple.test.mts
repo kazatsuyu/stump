@@ -4,6 +4,7 @@ import {
   Fill,
   Flatten,
   IndexSequence,
+  Join,
   Last,
   MinLength,
   Reverse,
@@ -128,7 +129,11 @@ namespace _test {
     AssertEq<At<[1, 2, 3, ...0[], 4, 5], '3'>, 0 | 4>,
     AssertEq<At<[1, 2, 3, ...0[], 4, 5], '4'>, 0 | 4 | 5>,
     AssertEq<At<[1, 2, 3, ...0[], 4, 5], '5'>, 0 | 4 | 5 | undefined>,
+    AssertEq<Flatten<[[], 0, [1], [[2]], [[[3]]]], '2'>, [0, 1, 2, [3]]>,
     AssertEq<Sum<['1', '2', '3', '4', '5']>, '15'>,
     AssertEq<Sum<[]>, '0'>,
+    AssertEq<Join<['a', 'b', 'c']>, 'a,b,c'>,
+    AssertEq<Join<['a', 'b', 'c'], ''>, 'abc'>,
+    AssertEq<Join<[]>, ''>,
   ][number];
 }
