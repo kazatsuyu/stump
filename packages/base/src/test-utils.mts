@@ -73,4 +73,4 @@ type Normalize<T> = {
  * //         ^^ Error
  * ```
  */
-export type AssertEq<T extends Normalize<U>, U extends Normalize<T>> = Extends<[T, U], [Normalize<U>, Normalize<T>]>;
+export type AssertEq<T extends U, U extends Normalize<T>> = Extends<[T, U], [Normalize<U>, Normalize<T>]>;

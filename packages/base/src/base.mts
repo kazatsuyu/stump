@@ -43,10 +43,14 @@ export type Extends<T, U> = T extends U ? true : false;
  */
 export type Not<T extends boolean> = Extends<T, false>;
 
+export type Primitive = string | number | bigint | boolean | undefined | null;
+
+export type AltUnknown = Primitive | symbol | {};
+
 /**
  * @category Base
  *
- * @template {string | number | bigint | boolean | undefined | null} T
+ * @template {Primitive} T
  *
  * @description
  * Convert `T` to `string`.
@@ -66,12 +70,14 @@ export type Not<T extends boolean> = Extends<T, false>;
  * ];
  * ```
  */
-export type ToString<T extends string | number | bigint | boolean | undefined | null> = `${T}`;
+export type ToString<T extends Primitive> = `${T}`;
+
+export type AnyToString<T> = T extends symbol ? never : T extends Primitive ? `${T}` : string;
 
 /**
  * @category Base
  *
- * @template {string} T
+ * @template {unknown} T
  *
  * @description
  * If `T` is number-like string(`${number}`), convert to `number`. Otherwise returns `never`.
@@ -83,12 +89,12 @@ export type ToString<T extends string | number | bigint | boolean | undefined | 
  * //     type A = [42, 0.1, never]
  * ```
  */
-export type ToNumber<T extends string> = T extends `${infer U extends number}` ? U : never;
+export type ToNumber<T> = T extends `${infer U extends number}` ? U : never;
 
 /**
  * @category Base
  *
- * @template {string} T
+ * @template {unknown} T
  *
  * @description
  * If `T` is bigint-like string(`${bigint}`), convert to `bigint`. Otherwise returns `never`.
@@ -100,4 +106,6 @@ export type ToNumber<T extends string> = T extends `${infer U extends number}` ?
  * //     type A = [42n, never, never]
  * ```
  */
-export type ToBigint<T extends string> = T extends `${infer U extends bigint}` ? U : never;
+export type ToBigint<T> = T extends `${infer U extends bigint}` ? U : never;
+
+export type Readonly<T> = T extends readonly unknown[] ? readonly [...T] : globalThis.Readonly<T>;
